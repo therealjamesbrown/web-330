@@ -1,0 +1,44 @@
+<!--
+    /*
+============================================
+; Title:  Exercise 4.3
+; Author: Professor Krasso
+; Modifications by: James Brown
+; Date:   3/10/2020
+; Description: exercise 4.3 per instructions
+;===========================================
+*/
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 4.3</title>
+
+    <!-- jQuery reference -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <h4></h4>
+    <button id="delete">Delete Food Order</button>
+
+<script>
+
+$('#delete').click(function() {
+        $.ajax({
+            url: "http://httpbin.org/delete",
+            dataType: "json",
+            type: "DELETE",
+            data: {meal1: "Burger", meal2: "Pizza", meal3: "Chicken"},
+            success: function(data, status){
+                console.log(data);
+                console.log(`Meal1: ${data.form.meal1}\nMeal2: ${data.form.meal2}\nMeal3:${data.form.meal3}\nStatus: ${status}`);
+            }
+        })
+    });
+</script>
+
+</body>
+</html>
