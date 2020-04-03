@@ -2,11 +2,11 @@
 <!--
     /*
 ============================================
-; Title:  Exercise 7.2
+; Title:  Exercise 7.3
 ; Author: Professor Krasso
 ; Modified by: James Brown
 ; Date:   4/3/2020
-; Description: exercise 7.2 per instructions
+; Description: exercise 7.3 per instructions
 ;===========================================
 */
 -->
@@ -15,7 +15,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 7.2 - The "if" Binding</title>
+    <title>Exercise 7.3 - The "foreach" Binding</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,39 +43,36 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Assignment 7.2 - The "if" Binding</h2>
-                <br />
-                <div class="form-group">
-                    <label for="txtFirstName">First Name: </label>
-                    <input type="text" data-bind="value: firstName, valueUpdate: 'keyup'" class="form-control" id="txtFirstName"/>
-                </div>
-                <div data-bind="if: firstName">
-                    <div class="form-group">
-                        <label for="txtLastName">Last Name: </label>
-                        <input type="text" data-bind="value: lastName, valueUpdate: 'keyup'" class="form-control" id="txtLastName"/>
-                    </div>
-                </div>
-                <br />
-                <div data-bind="if: lastName">
-                    <h2><span id="fullNameOutput" class="alert-success" data-bind="text: fullName"></span></h2>
-                </div>
+                <h2>Text Books</h2>
+                <table class="table table-dark table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: textBooks">
+                        <tr>
+                            <td data-bind="text: title"></td>
+                            <td data-bind="text: price"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
 <script>
-    //controller
-    function PersonViewModel(){
-        this.firstName = ko.observable("");
-        this.lastName = ko.observable("");
+   function TextBooksViewModel(){
+       this.textBooks = ko.observableArray([
+           {title: "Learning JavaScript Design Patterns", price: 37.56},
+           {title: "Atomic Design", price: 26.54},
+           {title: "JavaScript The Definitive Guide", price: 75.65},
+           {title: "Express in Action", price: 34.87}
+       ]);
+   }
 
-        this.fullName = ko.pureComputed(function(){
-            return this.firstName() + " " + this.lastName();
-        }, this);
-    }
-
-    //call ko to do its thing
-    ko.applyBindings(new PersonViewModel());
+   ko.applyBindings(new TextBooksViewModel());
 
 </script>
 <!--Imports for BS4-->
