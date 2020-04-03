@@ -1,0 +1,87 @@
+
+<!--
+    /*
+============================================
+; Title:  Exercise 7.4
+; Author: Professor Krasso
+; Modified by: James Brown
+; Date:   4/3/2020
+; Description: exercise 7.4 per instructions
+;===========================================
+*/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 7.4 - Other Bindings</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta description="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- jquery Reference Library -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <!-- Knockout script-->
+    <script src="../knockout-v3.5.1.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+          </ul>
+    </nav>
+    <br /> <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Tutorials</h2>
+                <table class="table table-dark table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: tutorialsArray">
+                        <tr>
+                            <td><a target="_blank" data-bind="attr: {href: url}, style: {color: 'light-blue'}">Go!</a></td>
+                            <td data-bind="text: title"></td>
+                            <td data-bind="text: description"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+   function TutorialsViewModel(){
+       this.tutorialsArray = ko.observableArray([
+           {url: 'https://www.youtube.com/watch?v=MNiUcuo3Wio', title: 'Rich Web UIs with Knockout.js', description: 'Overview of what Knockout JS is and why it is helpful'},
+           {url: 'https://www.youtube.com/watch?v=siif1lEfM7w', title: 'KnockoutJS Sliders, DOM Properties, Custom Bindings', description: 'Creating custom bindings with knockout'},
+           {url: 'https://www.youtube.com/watch?v=6m6QWuhLGZc&list=LLxOS1IjLKKZmVw8U8OPwK-g&index=24&t=0s', title: 'Nested Loops and Arrays', description: 'How to iterate multi dimensional arrays'},
+           {url: 'https://netbasal.com/javascript-observables-under-the-hood-2423f760584', title: 'JavaScript — Observables Under The Hood', description: 'How Observables work under the hood'},
+           {url: 'https://www.youtube.com/watch?v=pDMnMzi7uCY&list=LLxOS1IjLKKZmVw8U8OPwK-g&index=2&t=0s', title: 'KnockoutJS The Basic for beginner part-4 subscribe and keyup', description: 'Using subscribe and keyup with Knockout'}
+       ]);
+   }
+
+//Call ko to do its thing
+ko.applyBindings(new TutorialsViewModel());
+
+</script>
+<!--Imports for BS4-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
