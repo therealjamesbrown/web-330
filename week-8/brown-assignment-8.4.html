@@ -2,11 +2,11 @@
 <!--
     /*
 ============================================
-; Title:  Exercise 8.3
+; Title:  Exercise 8.4
 ; Author: Professor Krasso
 ; Modified by: James Brown
 ; Date:   4/10/2020
-; Description: exercise 8.3 per instructions
+; Description: exercise 8.4 per instructions
 ;===========================================
 */
 -->
@@ -15,7 +15,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exercise 8.3 - Update and Delete</title>
+    <title>Exercise 8.4 - Complete CRUD</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta description="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -46,27 +46,35 @@
             </div>
         </div>
         <br />
-        <h2>UD Example</h2>
+        <h2>Brown Assignment 8.4 - CRUD</h2>
+
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-inverse" style="background-color: #333; border-color: #333; color: white;">
-                    <h3 class="card-title">Grocery List</h3>
+                    <h3 class="card-title">Employee Records <small class="float-sm-right">
+                        <label for="txtName">Name: </label>
+                        <input type="text" data-bind="value: nameToAdd, valueUpdate: 'afterkeydown'" id="txtName"/>
+                        <a href="#" data-bind="click: add" class="btn btn-success">Add</a>
+                    </small>      
+                </h3>
+
                     <div class="card-text">
                         <table class="table table-dark table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>FruitId</th>
+                                    <th>EmployeeId</th>
                                     <th>Name</th>
                                     <th>Functions</th>
                                 </tr>
                             </thead>
-                            <tbody data-bind="foreach: Fruits">
+                            <tbody data-bind="foreach: Employees">
                                 <tr>
                                     <td data-bind="text: Id"></td>
                                     <td data-bind="text: Name"></td>
                                 <td>
                                 <span>
-                                    <a href="#" class="btn btn-success" data-bind="click:$root.edit">
+                                    <a href="#" class="btn btn-warning" data-bind="click:$root.edit">
                                         <i class="fa fa-pencil fa-lg"></i>EDIT
                                     </a>
                                 </span>
@@ -83,14 +91,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4" data-bind="if: Fruit">
+        <div class="col-sm-4" data-bind="if: editWasClicked">
             <div class="card card-inverse" style="background-color: #333; border-color: #333; color: white;">
             <div class="card-block p-3">
-                <h3 class="card-title">Grocery List Item</h3>
+                <h3 class="card-title">Employee</h3>
                 <div class="card-text">
                     <div class="form-group">
                         <label for="txtName">Name: </label>
-                        <input type="text" id="txtName" data-bind="value: Fruit().Name" class="form-control" />
+                        <input type="text" id="txtName" data-bind="value: Employee().Name" class="form-control" />
                         <div class="form-group float-right">
                             <button data-bind="click: $root.cancel" class="btn btn-group btn-danger">Cancel</button>
                             <button data-bind="click: $root.update" class="btn btn-group btn-success">Save</button>
@@ -99,61 +107,91 @@
                 </div>
             </div>
             </div>
+
+            
         </div>
+                        
     </div>
 
 <script>
-function Fruit(id, name){
+function Employee(id, name){
     this.Id =id;
     this.Name = name;
 }
 
-var fruitList = [
-    new Fruit(1, "Apple"),
-    new Fruit(2, "Orange"),
-    new Fruit(3, "Mango"),
-    new Fruit(4, "Watermelon"),
-    new Fruit(5, "Cantaloupe")
+var employeeList = [
+    new Employee(1, "James"),
+    new Employee(2, "Shyan"),
+    new Employee(3, "Fred"),
+    new Employee(4, "Carol Baskin"),
+    new Employee(5, "Joe Exotic")
 ];
 
-function ShoppingCartViewModel(){
+function PayrollViewModel(){
+    var self;
 
-    var self = this;
+    self = this;
+    
     self.error = ko.observable("");
     self.Id = ko.observable("");
     self.Name = ko.observable("");
+    this.nameToAdd = ko.observable(""); 
+    self.editWasClicked = ko.observable(false);
 
-
-    var Fruit = {
+    var Employee = {
         Id: self.Id,
         Name: self.Name
     };
 
-    self.Fruit = ko.observable();
-    self.Fruits = ko.observableArray(fruitList);
+    self.Employee = ko.observable();
+    self.Employees = ko.observableArray(employeeList);
+    
 
-    self.edit = function(Fruit){
-        self.Fruit(Fruit);
+    self.edit = function(Employee){
+        self.Employee(Employee);
+        self.editWasClicked(true);
     }
 
-    self.remove = function(Fruit){
-        self.Fruits.remove(Fruit);
+    self.remove = function(Employee){
+        self.Employees.remove(Employee);
+        self.editWasClicked(false);
     };
 
     self.cancel = function(){
-        self.Fruit(null);
+        self.editWasClicked(null);
     }
 
     self.update = function(){
-        var l_fruit = self.Fruit();
-        self.Fruits.remove(self.Fruit());
-        self.Fruits.push(l_fruit);
+        var newEmployee = self.Employee();
+        self.Employees.remove(self.Employee());
+        self.Employees.push(newEmployee);
+        self.editWasClicked(false);
+    }
+
+//add item to fruit array, but check if it is already on the list or if string is empty
+    self.add = function(){
+        if ((this.nameToAdd() !== "") && (self.Employees.indexOf(this.nameToAdd()) < 0)){
+            this.error("");
+            
+            //generate new id
+            var newId = self.Employees().length + 1;
+
+            //create a new employee instance, while passing in a new id and calling function to get name entered
+            var newEmployee = self.Employee({Id: newId, Name: this.nameToAdd()});
+            //push the new employee to the employees
+            self.Employees.push(self.Employee());
+        }
+        else {
+            this.error("Duplicate or Invalid Entry");
+        }
+        this.nameToAdd("");
     }
 }
 
 //call ko to do its thing
-ko.applyBindings(new ShoppingCartViewModel());
+ko.applyBindings(new PayrollViewModel());
 </script>
+
 <!--Imports for BS4-->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
