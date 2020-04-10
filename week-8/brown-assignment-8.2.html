@@ -41,7 +41,7 @@
     </nav>
     <br /> <br />
     <div class="container">
-        <div class="row">
+        <div class="row" data-bind="if: error">
             <div class="col-md-12">
                 <strong>Warning!</strong> <span data-bind="text: error()"></span>
             </div>
@@ -73,8 +73,8 @@
 <script>
    function EmployeeViewModel(){
     //set init values
-       this.nameToAdd = ko.observable("");
-       this.employeeList = ko.observableArray(["James", "Shyan", "Fred"]);
+       this.nameToAdd = ko.observable(""); 
+       this.employeeList = ko.observableArray(["James", "Shyan", "Fred"]); //read
        this.error = ko.observable("");
 
     //add item to fruit array, but check if it is already on the list or if string is empty
