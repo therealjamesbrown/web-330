@@ -1,0 +1,102 @@
+
+<!--
+    /*
+============================================
+; Title:  Exercise 8.2
+; Author: Professor Krasso
+; Modified by: James Brown
+; Date:   4/10/2020
+; Description: exercise 8.2 per instructions
+;===========================================
+*/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 8.2 - Create and Read</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta description="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- jquery Referenfce Library -->
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+    <!-- Knockout script s-->
+    <script src="../knockout-v3.5.1.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+          </ul>
+    </nav>
+    <br /> <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <strong>Warning!</strong> <span data-bind="text: error()"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-inverse" style="background-color: #333; border-color: #333; color: white;">
+                    <h3 class="card-title">Employee List</h3>
+                    <div class="card-text">
+                        <div class="form-group row">
+                            <label for="txtName" class="col-2 col-form-label">Name: </label>
+                            <div class="col-6">
+                                <input type="text" data-bind="value: nameToAdd, valueUpdate: 'afterkeydown'" class="form-control" id="txtName"/>
+                            </div>
+                            <div class="col-4">
+                                <a href="#" data-bind="click: add" class="btn btn-primary">Add</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtEmployeesList">Current Employees:</label>
+                            <select size="10" class="form-control" data-bind="options: employeeList" id="txtShoppingCart"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+   function EmployeeViewModel(){
+    //set init values
+       this.nameToAdd = ko.observable("");
+       this.employeeList = ko.observableArray(["James", "Shyan", "Fred"]);
+       this.error = ko.observable("");
+
+    //add item to fruit array, but check if it is already on the list or if string is empty
+    this.add = function(){
+        if ((this.nameToAdd() !== "") && (this.employeeList.indexOf(this.nameToAdd()) < 0)){
+            this.error("");
+            this.employeeList.push(this.nameToAdd());
+        }
+        else {
+            this.error("Duplicate or Invalid Entry");
+        }
+        this.nameToAdd("");
+    }
+   }
+
+   //call ko to do it's thing
+   ko.applyBindings(new EmployeeViewModel());
+
+</script>
+<!--Imports for BS4-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
