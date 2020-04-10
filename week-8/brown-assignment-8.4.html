@@ -47,14 +47,12 @@
         </div>
         <br />
         <h2>Brown Assignment 8.4 - CRUD</h2>
-
-        
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-inverse" style="background-color: #333; border-color: #333; color: white;">
                     <h3 class="card-title">Employee Records <small class="float-sm-right">
                         <label for="txtName">Name: </label>
-                        <input type="text" data-bind="value: nameToAdd, valueUpdate: 'afterkeydown'" id="txtName"/>
+                        <input type="text" data-bind="value: Name, valueUpdate: 'afterkeydown'" id="txtName"/>
                         <a href="#" data-bind="click: add" class="btn btn-success">Add</a>
                     </small>      
                 </h3>
@@ -135,7 +133,6 @@ function PayrollViewModel(){
     self.error = ko.observable("");
     self.Id = ko.observable("");
     self.Name = ko.observable("");
-    this.nameToAdd = ko.observable(""); 
     self.editWasClicked = ko.observable(false);
 
     var Employee = {
@@ -170,21 +167,21 @@ function PayrollViewModel(){
 
 //add item to fruit array, but check if it is already on the list or if string is empty
     self.add = function(){
-        if ((this.nameToAdd() !== "") && (self.Employees.indexOf(this.nameToAdd()) < 0)){
+        if ((this.Name() !== "") && (self.Employees.indexOf(this.Name()) < 0)){
             this.error("");
             
             //generate new id
             var newId = self.Employees().length + 1;
-
+            
             //create a new employee instance, while passing in a new id and calling function to get name entered
-            var newEmployee = self.Employee({Id: newId, Name: this.nameToAdd()});
+            var newEmployee = self.Employee({Id: newId, Name: this.Name()});
             //push the new employee to the employees
             self.Employees.push(self.Employee());
         }
         else {
             this.error("Duplicate or Invalid Entry");
         }
-        this.nameToAdd("");
+        this.Name("");
     }
 }
 
